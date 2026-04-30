@@ -60,6 +60,29 @@ func main() {
 
 	sum, product := calculatesumproduct(2,3)
 	fmt.Println(sum, product)
+
+	//if else
+	if age >= 18 {
+		fmt.Println("you are an adult")
+	} else if age >=13 {
+		fmt.Println("you are a teenager")
+	}else {
+		fmt.Println("you are a child")
+	}
+
+	//switches
+	day := "tuesday"
+
+	switch day {
+	case "monday":
+		fmt.Println("start the week")
+	case "tuesday", "wednesday","thursday":
+		fmt.Println("midweek")
+	case "friday":
+		fmt.Println("tgif")
+	default:
+		fmt.Println("its the weekend")
+}
 }
 	//functions
 	func add(a int,b int) int {
