@@ -18,6 +18,7 @@ type WorkoutEntry struct {
 	Reps            *int     `json:"reps"`
 	DurationSeconds *int     `json:"duration_seconds"`
 	Weight          *float64 `json:"weight"`
+	Notes           string `json:"notes"`
 	OrderIndex      int      `json:"order_index"`
 }
 
@@ -32,4 +33,45 @@ func NewPostgresWorkoutStore(db *sql.DB) *PostgreWorkoutStore {
 type WorkoutStore interface {
 	CreateWorkout(*Workout) (*Workout, error)
 	GetWorkoutByID(id int64) (*Workout, error)
+}
+
+func (pg *PostgreWorkoutStore) CreateWorkout(workout *Workout) (*Workout, error) {
+	tx, err := pg.db.Begin()
+	if err != nil {
+		return nil, err
+	}
+	defer tx.Rollback()
+	query := 
+	`INSERT INTO workouts (title, description, duration_minutes, calories_burned)
+	 VALUES ($1,$2,$3)
+	 RETURNING id
+	 `
+	 err = tx.QueryRow(query, workout.Title, workout.Description, workout.DurationMinutes, workout.CaloriesBurned).Scan(&workout.ID)
+
+	 if err != nil {
+		return nil, err
+	 }
+
+	 for _, entry := range workout.Entries {
+		query :=
+			`INSERT INTO workout_entries (workout_id, exercise_name, sets, reps, duration_seconds, weight, notes, order_index)
+			VALUES ($1, $2, $3, $4, $5, $6, $7, $8)	
+			RETURNING id
+			`
+			err = tx.QueryRow(query, workout.ID, entry.ExerciseName, entry.Sets, entry.Reps, entry.DurationSeconds, entry.Weight, entry.Notes, entry.OrderIndex).Scan(&entry.ID)
+	 }
+	 if err != nil {
+		return nil, err
+	 }
+	 err = tx.Commit()
+	 if err != nil {
+		return nil, err
+	 }
+
+	 return workout, nil
+}
+
+func (pg *PostgreWorkoutStore) GetWorkoutByID(id int64) (*Workout, error) {
+	workout := &Workout{}
+	return workout, nil
 }
