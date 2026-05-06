@@ -9,6 +9,7 @@ import (
 
 	"github.com/dev-karani/http-server/internals/api"
 	"github.com/dev-karani/http-server/internals/store"
+	"github.com/dev-karani/http-server/migrations"
 )
 
 type Application struct {
@@ -22,6 +23,12 @@ func NewApplication() (*Application, error) {
 	if err !=nil {
 		return nil, err
 	}
+
+	err = store.MigrateFS(pgDB, migrations.FS, ".")
+	if err !=nil {
+		panic(err)
+	}
+
 	logger :=log.New(os.Stdout, "", log.Ldate|log.Ltime)
 	//our stores will go here
 

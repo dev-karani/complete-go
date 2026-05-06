@@ -1,3 +1,4 @@
+// migrations/migrations.go
 package migrations
 
 import "embed"
