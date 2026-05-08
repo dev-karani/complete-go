@@ -69,7 +69,7 @@ func (pg *PostgreWorkoutStore) CreateWorkout(workout *Workout) (*Workout, error)
 	 }
 
 	 return workout, nil
-}
+} 
 
 func (pg *PostgreWorkoutStore) GetWorkoutByID(id int64) (*Workout, error) {
 	workout := &Workout{}
