@@ -82,8 +82,89 @@ func main() {
 		fmt.Println("tgif")
 	default:
 		fmt.Println("its the weekend")
+	}
+	
+	//for loop
+	for i := 0; i <3; i++  {
+		fmt.Println("this is i," ,i)
+	}
+
+	//"while loop"
+	counter := 0  //counter
+	for counter < 3 {
+		fmt.Println("this is the counter", counter)
+		counter ++ //increment  
+	}
+	//explicit infinite loop
+	iterations :=0 
+	for{
+		//some condition is met
+		if iterations > 3 {
+			break
+		}
+		fmt.Println(iterations)
+		iterations ++
+	}
+
+	//arrays & slices
+	numbers := [5] int{20,30,40,50,60}
+	fmt.Printf("this is our arrray %v\n", numbers)
+	fmt.Printf("this is our arrray %v\n", numbers[0])
+
+	//multidimensional arrays
+	matrix := [2][3] int{
+		{1,2,3},
+		{4,5,6},
+	}
+	fmt.Printf("this is our matrix: %v\n", matrix)
+
+	//slices
+
+
+	fruits := []string{"apple", "banana", "strawberry"}
+	fmt.Printf("these are my fruits %v\n", fruits)
+
+	fruits = append(fruits, "kiwi")
+	fmt.Printf("these are my fruits %v\n", fruits)
+
+	morefruits := []string{"blueberries", "tomato"}
+	fruits = append(fruits, morefruits...)
+	fmt.Printf("these are my fruits %v\n", fruits)
+
+	// nums := []int{1,2,3,4}
+	// numsMixed := append(nums, morefruits)
+
+	//iterating on arrays & slices
+	for index, value := range numbers{
+		fmt.Printf("index %d and value %d \n", index, value)
+	}
+
+
+	//maps
+	capitalCities := map[string]string {
+		"USA": "Washington D.C",
+		"India": "New Delhi",
+		"UK": "London",
+	}
+	fmt.Println(capitalCities["USA"])  //print value
+	fmt.Println(capitalCities["Germany"])  //checks but return ""
+
+	//checks for porperties and values
+	capital, exist := capitalCities["Germany"]
+
+	if exist {
+		fmt.Println("this is the capital", capital)
+	} else{
+		fmt.Println("does not exist")
+		print(exist)
+	}
+
+	//to delete key
+	delete(capitalCities, "UK")
+	// fmt.Printf("this is the new deleted map %V\n", capitalCities)
 }
-}
+
+
 	//functions
 	func add(a int,b int) int {
 		return a + b
